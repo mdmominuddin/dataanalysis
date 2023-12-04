@@ -1,0 +1,28 @@
+<!-- dashboard.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Welcome to Your Dashboard, {{ user.username }}!</h1>
+
+  {% if datasets %}
+    <h2>Your Datasets</h2>
+    <ul>
+      {% for dataset in datasets %}
+        <li>{{ dataset.name }}</li>
+        <a href="{% url 'map_columns' visualization_id=visualization.id %}">Map Columns</a>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  {% if visualizations %}
+    <h2>Your Visualizations</h2>
+    <ul>
+      {% for visualization in visualizations %}
+        <li>
+          {{ visualization.name }}
+          <a href="{% url 'add_data_point' visualization_id=visualization.id %}">Add Data Point</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,36 @@
+<!-- home.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <h1>Welcome, {{ user.username }}!</h1>
+
+        <h2>Your Datasets</h2>
+        {% if datasets %}
+            <ul>
+                {% for dataset in datasets %}
+                    <li>{{ dataset.name }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No datasets available.</p>
+        {% endif %}
+
+        <h2>Your Visualizations</h2>
+        {% if visualizations %}
+            <ul>
+                {% for visualization in visualizations %}
+                    <li>{{ visualization.name }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No visualizations available.</p>
+        {% endif %}
+    {% else %}
+        <h1>Welcome to Your Project!</h1>
+        <p>This is the home page. Please <a href="{% url 'login' %}">log in</a> or <a href="{% url 'register' %}">register</a> to access your dashboard.</p>
+    {% endif %}
+{% endblock %}

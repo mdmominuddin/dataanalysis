@@ -1,0 +1,29 @@
+<!-- upload_dataset.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Upload Dataset</h2>
+  <form method="post" enctype="multipart/form-data" action="{% url 'upload_dataset' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Upload</button>
+  </form>
+
+  <hr>
+
+  <h2>Map Columns to Visualization</h2>
+  {% if visualizations %}
+    <form method="post" action="{% url 'map_columns' visualization.id %}">
+      {% csrf_token %}
+      <label for="visualization">Select Visualization:</label>
+      <select name="visualization" id="visualization">
+        {% for vis in visualizations %}
+          <option value="{{ vis.id }}">{{ vis.name }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit">Map Columns</button>
+    </form>
+  {% else %}
+    <p>No visualizations available. Create a visualization first.</p>
+  {% endif %}
+{% endblock %}
